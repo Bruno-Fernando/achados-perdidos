@@ -1,7 +1,15 @@
+import { getAuthSession } from "@/lib/auth";
 import React from "react";
 
-function page() {
-  return <div>área logada</div>;
+async function page() {
+  const session = await getAuthSession();
+
+  return (
+    <div>
+      área logada
+      <p> {session && session.user.email}</p>
+    </div>
+  );
 }
 
 export default page;
