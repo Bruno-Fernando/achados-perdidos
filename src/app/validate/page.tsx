@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/Form";
 import ExtFormContainer from "@/components/ExtFormContainer";
+import InfoDialog from "./_components/InfoDialog";
 
 function Validate() {
   const { toast } = useToast();
@@ -135,6 +136,8 @@ function Validate() {
           </Button>
         </form>
       </Form>
+
+      <InfoDialog />
     </ExtFormContainer>
   );
 }
