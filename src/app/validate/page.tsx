@@ -91,7 +91,11 @@ function Validate() {
                 <FormItem>
                   <FormLabel>Matrícula</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite sua matrícula" {...field} />
+                    <Input
+                      placeholder="Digite sua matrícula"
+                      {...field}
+                      disabled={loading}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,6 +114,7 @@ function Validate() {
                         placeholder="Digite sua senha"
                         type={showPassword ? "text" : "password"}
                         {...field}
+                        disabled={loading}
                       />
                       {showPassword ? (
                         <EyeOff

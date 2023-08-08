@@ -24,11 +24,6 @@ export async function POST(req: Request) {
       return new Response("User not found", { status: 404 });
     }
 
-    if (user && user.ufcgLoginValidated) {
-      console.log(user);
-      return NextResponse.json({ isAuth: true }, { status: 200 });
-    }
-
     // Inicia uma nova instancia do navegador
     const browser = await puppeteer.launch({ headless: "new" });
 

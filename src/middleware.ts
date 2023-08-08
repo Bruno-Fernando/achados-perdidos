@@ -9,9 +9,10 @@ export default async function middleware(req: NextRequest) {
     path === "/" ||
     path === "/login" ||
     path.startsWith("/_next/static") ||
-    path.startsWith("/_next / image") ||
+    path.startsWith("/_next/image") ||
     path.startsWith("favicon.ico") ||
-    path.startsWith("/api/auth")
+    path.startsWith("/api/auth") ||
+    path.startsWith("/logo")
   ) {
     return NextResponse.next();
   }
