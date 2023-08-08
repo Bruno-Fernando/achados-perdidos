@@ -31,7 +31,7 @@ function GoogleLogin() {
     <Button
       onClick={loginWithGoogle}
       disabled={loading}
-      className="w-1/2 min-w-[140px] max-w-xs space-x-5"
+      className="mx-auto flex w-1/2 min-w-[140px] max-w-xs space-x-5"
     >
       {loading ? (
         <Loader2 className="mr-2 h-full w-4 animate-spin" />

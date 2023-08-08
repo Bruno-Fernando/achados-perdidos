@@ -23,7 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/Form";
-import Image from "next/image";
+import ExtFormContainer from "@/components/ExtFormContainer";
 
 function Validate() {
   const { toast } = useToast();
@@ -73,78 +73,69 @@ function Validate() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-5">
-      <div className="rounded border border-slate-300 p-5">
-        <div className="mb-8 flex items-center border-b border-white pb-3">
-          <Image src="/logo.svg" alt="Logo" width={80} height={80} />
-          <h2 className="mr-3 text-center text-2xl text-white">
-            Achados e perdidos UFCG
-          </h2>
-        </div>
+    <ExtFormContainer>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="registrationCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Matrícula</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Digite sua matrícula"
+                    {...field}
+                    disabled={loading}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="registrationCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Matrícula</FormLabel>
-                  <FormControl>
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="relative">
+                <FormLabel>Senha</FormLabel>
+                <FormControl>
+                  <>
                     <Input
-                      placeholder="Digite sua matrícula"
+                      placeholder="Digite sua senha"
+                      type={showPassword ? "text" : "password"}
                       {...field}
                       disabled={loading}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="relative">
-                  <FormLabel>Senha</FormLabel>
-                  <FormControl>
-                    <>
-                      <Input
-                        placeholder="Digite sua senha"
-                        type={showPassword ? "text" : "password"}
-                        {...field}
-                        disabled={loading}
+                    {showPassword ? (
+                      <EyeOff
+                        className="absolute right-2 top-8 hover:cursor-pointer"
+                        onClick={toggleShowPassword}
                       />
-                      {showPassword ? (
-                        <EyeOff
-                          className="absolute right-2 top-8 hover:cursor-pointer"
-                          onClick={toggleShowPassword}
-                        />
-                      ) : (
-                        <Eye
-                          className="absolute right-2 top-8 hover:cursor-pointer"
-                          onClick={toggleShowPassword}
-                        />
-                      )}
-                    </>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              disabled={loading}
-              className="mx-auto flex w-1/2 font-bold"
-            >
-              {loading && <Loader2 className="mr-2 h-full w-4 animate-spin" />}
-              Validar
-            </Button>
-          </form>
-        </Form>
-      </div>
-    </main>
+                    ) : (
+                      <Eye
+                        className="absolute right-2 top-8 hover:cursor-pointer"
+                        onClick={toggleShowPassword}
+                      />
+                    )}
+                  </>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={loading}
+            className="mx-auto flex w-1/2 font-bold"
+          >
+            {loading && <Loader2 className="mr-2 h-full w-4 animate-spin" />}
+            Validar
+          </Button>
+        </form>
+      </Form>
+    </ExtFormContainer>
   );
 }
 
