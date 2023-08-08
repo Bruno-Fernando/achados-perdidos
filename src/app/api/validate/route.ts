@@ -9,10 +9,10 @@ const url = "https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/";
 
 export async function POST(req: Request) {
   try {
-    const { payload } = await req.json();
+    const body = await req.json();
     const session = await getAuthSession();
     const { registrationCode, password } =
-      UfcgRegistrationCodeValidator.parse(payload);
+      UfcgRegistrationCodeValidator.parse(body);
 
     const user = await db.user.findFirst({
       where: {
