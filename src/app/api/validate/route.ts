@@ -2,10 +2,12 @@ import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UfcgRegistrationCodeValidator } from "@/lib/validators/validate";
 import { NextResponse } from "next/server";
-// import puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 import { z } from "zod";
 
 const url = "https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/";
+
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
@@ -24,11 +26,10 @@ export async function POST(req: Request) {
       return new Response("User not found", { status: 404 });
     }
 
-    return new Response("teste de response");
-
     // Inicia uma nova instancia do navegador
-    // const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch({ headless: "new" });
 
+    return new Response("conseguiu abrir uma intancia");
     // Abre uma aba
     // const page = await browser.newPage();
 
