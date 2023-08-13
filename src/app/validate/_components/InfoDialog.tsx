@@ -10,7 +10,7 @@ import {
 function InfoDialog() {
   return (
     <Dialog>
-      <DialogTrigger className="mt-6 text-sm">
+      <DialogTrigger className="mt-6 text-sm underline">
         Porque pedimos seus dados de matrícula?
       </DialogTrigger>
       <DialogContent>

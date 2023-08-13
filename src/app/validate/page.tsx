@@ -3,8 +3,6 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import {
   UfcgRegistrationCodeValidator,
   ValidateRegistrationCodePayload,
@@ -25,6 +23,7 @@ import {
 } from "@/components/ui/Form";
 import ExtFormContainer from "@/components/ExtFormContainer";
 import InfoDialog from "./_components/InfoDialog";
+import { useUpdateValidatedUser, useValidate } from "@/services/useValidate";
 
 function Validate() {
   const { toast } = useToast();
@@ -42,30 +41,34 @@ function Validate() {
     },
   });
 
-  const { mutate: validateUfcgUser } = useMutation({
-    mutationFn: (body: ValidateRegistrationCodePayload) => {
-      return axios.post("/api/validate", {
-        ...body,
-      });
+  const handleError = () => {
+    toast({
+      title: "Houve um problema",
+      description:
+        "Aconteceu um problema durante o processo de verificação da matricula, tente novamente mais tarde ou entre em contato",
+      variant: "destructive",
+    });
+    form.reset();
+    setIsloading(false);
+  };
+
+  const { mutate: validateUser } = useValidate({
+    onSuccess: () => {
+      updateUser();
     },
+    onError: handleError,
+  });
+
+  const { mutate: updateUser } = useUpdateValidatedUser({
     onSuccess: async () => {
       await update();
       router.replace("/home");
     },
-    onError: () => {
-      toast({
-        title: "Houve um problema",
-        description:
-          "Aconteceu um problema durante o processo de verificação da matricula, tente novamente mais tarde ou entre em contato",
-        variant: "destructive",
-      });
-      form.reset();
-      setIsloading(false);
-    },
+    onError: handleError,
   });
 
   const onSubmit = (values: ValidateRegistrationCodePayload) => {
-    validateUfcgUser(values);
+    validateUser(values);
     setIsloading(true);
   };
 
@@ -136,6 +139,8 @@ function Validate() {
           </Button>
         </form>
       </Form>
+
+      {loading && <p className="mt-6 text-sm">Isso pode demorar um pouco...</p>}
 
       <InfoDialog />
     </ExtFormContainer>
