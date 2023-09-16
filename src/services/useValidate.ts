@@ -2,14 +2,10 @@ import { ValidateRegistrationCodePayload } from "@/lib/validators/validate";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
-const postValidateUser = async (body: ValidateRegistrationCodePayload) => {
+const postValidateUser = async (body: any) => {
   const { data } = await axios.post(
     process.env.NEXT_PUBLIC_VALIDATE_USER_URL!,
-    {
-      data: {
-        ...body,
-      },
-    },
+    body,
   );
 
   return data;
@@ -19,8 +15,8 @@ export const useValidate = ({
   onSuccess,
   onError,
 }: {
-  onSuccess: OnSuccess<ValidateRegistrationCodePayload>;
-  onError: OnError<ValidateRegistrationCodePayload>;
+  onSuccess: OnSuccess<any>;
+  onError: OnError<any>;
 }) => {
   return useMutation({ mutationFn: postValidateUser, onSuccess, onError });
 };
