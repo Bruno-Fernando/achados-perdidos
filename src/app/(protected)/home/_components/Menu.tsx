@@ -29,7 +29,7 @@ async function Menu() {
           {session?.user.name}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem disabled>
           <UserCircle2 className="mr-2 h-4 w-4" />
           Perfil
         </DropdownMenuItem>
