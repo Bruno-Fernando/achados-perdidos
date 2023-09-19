@@ -21,6 +21,7 @@ import {
   Search,
 } from "lucide-react";
 import LogoutBtn from "../home/_components/LogoutBtn";
+import ToggleDarkMode from "../home/_components/ToggleDarkMode";
 
 async function MobileDrawer() {
   const session = await getAuthSession();
@@ -73,6 +74,10 @@ async function MobileDrawer() {
             </Button>
           </SheetClose>
         </SheetFooter>
+
+        <div className="absolute bottom-20">
+          <ToggleDarkMode />
+        </div>
 
         <Button variant="secondary" className="absolute bottom-6">
           <LogoutBtn />
