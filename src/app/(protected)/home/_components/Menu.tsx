@@ -18,7 +18,7 @@ async function Menu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="hidden md:block">
         <Avatar className="cursor-pointer">
           <AvatarImage src={session?.user.image || ""} />
           <AvatarFallback>{avatarFallback}</AvatarFallback>

@@ -4,7 +4,7 @@ import { ArrowDownWideNarrow, Filter, PlusCircle, Search } from "lucide-react";
 
 function Sidebar() {
   return (
-    <div className="border-r">
+    <div className="hidden border-r md:block">
       <div className="sticky top-14">
         <div className="ml-auto flex w-full max-w-xs flex-col justify-end gap-2 px-5">
           <div>
