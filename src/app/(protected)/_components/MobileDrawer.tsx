@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import LogoutBtn from "../home/_components/LogoutBtn";
 import ToggleDarkMode from "../home/_components/ToggleDarkMode";
+import Link from "next/link";
 
 async function MobileDrawer() {
   const session = await getAuthSession();
@@ -68,9 +69,11 @@ async function MobileDrawer() {
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button variant="default" className="mt-4 rounded-full">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Novo post
+            <Button asChild variant="default" className="mt-4 rounded-full">
+              <Link href="new-post">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Novo post
+              </Link>
             </Button>
           </SheetClose>
         </SheetFooter>

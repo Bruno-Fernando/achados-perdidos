@@ -1,13 +1,18 @@
-import Image from "next/image";
 import Menu from "../home/_components/Menu";
 import MobileDrawer from "./MobileDrawer";
+import Link from "next/link";
+import { Avatar, AvatarImage } from "@/components/ui/Avatar";
 
-async function Header() {
+function Header() {
   return (
     <header className="fixed flex h-12 w-full items-center justify-center border-b bg-background px-14 md:justify-between">
       <MobileDrawer />
 
-      <Image src="/logo.svg" alt="Logo" width={50} height={50} />
+      <Link href="home">
+        <Avatar className="cursor-pointer bg-black dark:bg-transparent">
+          <AvatarImage src="/logo.svg" />
+        </Avatar>
+      </Link>
 
       <Menu />
     </header>
