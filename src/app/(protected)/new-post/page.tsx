@@ -12,12 +12,17 @@ import {
 import { Input } from "@/components/ui/Input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
 import { Textarea } from "@/components/ui/Textarea";
+import { useToast } from "@/hooks/use-toast";
 import { PostPayload, PostValidator } from "@/lib/validators/newPost";
 import { useCreatePost } from "@/services/usePost";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 function NewPost() {
+  const router = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<PostPayload>({
     resolver: zodResolver(PostValidator),
     defaultValues: {
@@ -29,7 +34,11 @@ function NewPost() {
 
   const { mutate } = useCreatePost({
     onSuccess: (data) => {
-      console.log(data);
+      toast({
+        title: "Post criado",
+        description: "Seu post foi criado com sucesso!!!",
+      });
+      router.push("/home");
     },
   });
 

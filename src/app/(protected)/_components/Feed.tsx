@@ -1,12 +1,24 @@
+"use client";
+import { useGetPosts } from "@/services/usePost";
 import PostCard from "./PostCard";
 
 function Feed() {
-  return (
-    <div className="flex flex-col gap-4">
-      <PostCard lost />
+  const { data } = useGetPosts();
 
-      <PostCard />
-    </div>
+  return (
+    <>
+      <div className="flex flex-col gap-4">
+        {data?.map(({ title, description, id, type, createdAt }) => (
+          <PostCard
+            key={id}
+            title={title}
+            description={description}
+            lost={type === "LOST"}
+            createdAt={createdAt || ""}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

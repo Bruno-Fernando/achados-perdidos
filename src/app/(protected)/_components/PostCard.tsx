@@ -1,10 +1,14 @@
 import Image from "next/image";
 
 interface Props {
+  title: string;
+  description: string;
+  createdAt: string | Date;
   lost?: boolean;
 }
 
-function PostCard({ lost }: Props) {
+function PostCard({ title, description, lost, createdAt }: Props) {
+  console.log(createdAt);
   return (
     <div
       className={`rounded-lg border border-l-8 ${
@@ -18,15 +22,17 @@ function PostCard({ lost }: Props) {
         height={300}
       />
 
-      <p className="pr-3 text-end">18/09/2023</p>
+      <p className="pr-3 text-end">
+        {new Date(createdAt.toString()).toLocaleDateString()}
+      </p>
       <div className="px-3 pb-3">
         <h3 className="text-lg">
           <span className={lost ? "text-red-600" : "text-green-600"}>
             {lost ? "Perdido: " : "Encontrado: "}
           </span>
-          Título do post
+          {title}
         </h3>
-        <p>Descrição do post</p>
+        <p>{description}</p>
       </div>
     </div>
   );

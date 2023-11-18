@@ -33,3 +33,19 @@ export async function POST(req: Request) {
     return new Response("Could not create post", { status: 500 });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const session = await getAuthSession();
+
+    if (!session?.user) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    const posts = await db.post.findMany();
+
+    return NextResponse.json(posts);
+  } catch (error) {
+    return new Response("Could not query posts", { status: 500 });
+  }
+}
