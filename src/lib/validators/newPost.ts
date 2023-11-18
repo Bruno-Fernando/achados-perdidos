@@ -9,7 +9,7 @@ export const PostValidator = z.object({
     .string()
     .min(5, "Descrição deve ter no mínimo 5 caracteres")
     .max(150, "Descrição deve ter no máximo 150 caracteres"),
-  status: z.enum(["lost", "found"], {
+  status: z.enum(["LOST", "FOUND"], {
     description: "description",
     required_error: "Escolha o tipo do post",
   }),

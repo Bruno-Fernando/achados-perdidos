@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/Input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
 import { Textarea } from "@/components/ui/Textarea";
 import { PostPayload, PostValidator } from "@/lib/validators/newPost";
+import { useCreatePost } from "@/services/usePost";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -26,8 +27,14 @@ function NewPost() {
     },
   });
 
+  const { mutate } = useCreatePost({
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+
   const onSubmit = (values: PostPayload) => {
-    console.log(values);
+    mutate(values);
   };
 
   return (
@@ -81,14 +88,14 @@ function NewPost() {
                 >
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="lost" />
+                      <RadioGroupItem value="LOST" />
                     </FormControl>
                     <FormLabel className="font-normal">Perdido</FormLabel>
                   </FormItem>
 
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="found" />
+                      <RadioGroupItem value="FOUND" />
                     </FormControl>
                     <FormLabel className="font-normal">Encontrado</FormLabel>
                   </FormItem>
