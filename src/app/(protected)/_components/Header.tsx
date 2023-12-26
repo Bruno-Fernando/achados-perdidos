@@ -1,11 +1,11 @@
-import Menu from "../home/_components/Menu";
+import Menu from "./Menu";
 import MobileDrawer from "./MobileDrawer";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "@/components/ui/Avatar";
 
 function Header() {
   return (
-    <header className="fixed flex h-12 w-full items-center justify-center border-b bg-background px-14 md:justify-between">
+    <header className="fixed z-50 flex h-12 w-full items-center justify-center border-b bg-background px-14 md:justify-between">
       <MobileDrawer />
 
       <Link href="home">

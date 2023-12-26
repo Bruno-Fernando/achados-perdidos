@@ -8,7 +8,6 @@ interface Props {
 }
 
 function PostCard({ title, description, lost, createdAt }: Props) {
-  console.log(createdAt);
   return (
     <div
       className={`rounded-lg border border-l-8 ${

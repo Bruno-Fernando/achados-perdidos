@@ -20,8 +20,8 @@ import {
   PlusCircle,
   Search,
 } from "lucide-react";
-import LogoutBtn from "../home/_components/LogoutBtn";
-import ToggleDarkMode from "../home/_components/ToggleDarkMode";
+import LogoutBtn from "./LogoutBtn";
+import ToggleDarkMode from "./ToggleDarkMode";
 import Link from "next/link";
 
 async function MobileDrawer() {
