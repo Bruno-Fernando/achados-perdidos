@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { PostPayload, PostValidator } from "@/lib/validators/newPost";
 import { useCreatePost } from "@/services/usePost";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -32,11 +33,11 @@ function NewPost() {
     },
   });
 
-  const { mutate } = useCreatePost({
-    onSuccess: (data) => {
+  const { mutate, isPending } = useCreatePost({
+    onSuccess: () => {
       toast({
-        title: "Post criado",
-        description: "Seu post foi criado com sucesso!!!",
+        title: "Sucesso",
+        description: "Seu post acaba de ser criado!",
       });
       router.push("/home");
     },
@@ -56,7 +57,12 @@ function NewPost() {
             <FormItem>
               <FormLabel>Título</FormLabel>
               <FormControl>
-                <Input maxLength={50} {...field} />
+                <Input
+                  maxLength={50}
+                  {...field}
+                  disabled={isPending}
+                  placeholder="O que você perdeu ou encontrou?"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,6 +82,7 @@ function NewPost() {
                   rows={4}
                   maxLength={150}
                   {...field}
+                  disabled={isPending}
                 />
               </FormControl>
               <FormMessage />
@@ -94,6 +101,7 @@ function NewPost() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   className="flex flex-col space-y-1"
+                  disabled={isPending}
                 >
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
@@ -115,7 +123,8 @@ function NewPost() {
           )}
         />
 
-        <Button type="submit" className="mx-auto block">
+        <Button type="submit" className="mx-auto flex" disabled={isPending}>
+          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Criar novo post
         </Button>
       </form>
