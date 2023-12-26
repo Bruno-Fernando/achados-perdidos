@@ -20,8 +20,10 @@ export const useCreatePost = (
   return useMutation({ mutationFn: postNewPost, ...options });
 };
 
-const getPost = async () => {
-  const { data } = await axios.get<Prisma.PostCreateInput[]>("/api/post");
+export const getPost = async (): Promise<Prisma.PostCreateInput[]> => {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}api/post`,
+  );
 
   return data;
 };
@@ -29,5 +31,5 @@ const getPost = async () => {
 export const useGetPosts = (
   options?: Omit<UseQueryOptions<any, unknown, any, QueryKey>, "queryFn">,
 ) => {
-  return useQuery<Prisma.PostCreateInput[]>({ queryFn: getPost, ...options });
+  return useQuery({ queryKey: ["todos"], queryFn: getPost });
 };
