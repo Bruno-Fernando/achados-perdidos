@@ -71,6 +71,8 @@ model Post {
   authorId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  imgKey      String?
+  imgUrl      String?
 
   @@index([authorId])
 }
