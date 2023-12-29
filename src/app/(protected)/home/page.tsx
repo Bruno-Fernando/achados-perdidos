@@ -1,8 +1,17 @@
 import PostCard from "./_components/PostCard";
 import { getPosts } from "@/actions/posts";
+import PostPagination from "./_components/PostPagination";
 
-async function page() {
-  const data = await getPosts();
+async function NewPost({
+  searchParams,
+}: {
+  searchParams?: {
+    page?: string;
+  };
+}) {
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const data = await getPosts(currentPage);
 
   return (
     <div className="flex flex-col gap-4">
@@ -16,8 +25,10 @@ async function page() {
           imgUrl={imgUrl}
         />
       ))}
+
+      <PostPagination page={currentPage} />
     </div>
   );
 }
 
-export default page;
+export default NewPost;
