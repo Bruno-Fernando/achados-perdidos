@@ -19,6 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import UploadPostImg from "./_components/UploadPostImg";
 
 function NewPost() {
   const router = useRouter();
@@ -30,10 +31,11 @@ function NewPost() {
       title: "",
       description: "",
       status: undefined,
+      postImg: "",
     },
   });
 
-  const { mutate, isPending } = useCreatePost({
+  const { mutate: createPost, isPending } = useCreatePost({
     onSuccess: () => {
       toast({
         title: "Sucesso",
@@ -44,7 +46,16 @@ function NewPost() {
   });
 
   const onSubmit = (values: PostPayload) => {
-    mutate(values);
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("status", values.status);
+
+    if (values.postImg) {
+      formData.append("postImg", values.postImg[0]);
+    }
+
+    createPost(formData);
   };
 
   return (
@@ -122,6 +133,8 @@ function NewPost() {
             </FormItem>
           )}
         />
+
+        <UploadPostImg isLoading={isPending} />
 
         <Button type="submit" className="mx-auto flex" disabled={isPending}>
           {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

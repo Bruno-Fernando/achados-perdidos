@@ -1,6 +1,7 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { PostValidator } from "@/lib/validators/newPost";
+import { utapi } from "@/utils/uploadthing";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -12,17 +13,43 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const body = await req.json();
-    const { title, status, description } = PostValidator.parse(body);
+    const body = await req.formData();
+    const titleData = body.get("title");
+    const descriptionData = body.get("description");
+    const statusData = body.get("status");
+    const postImgData = body.get("postImg");
 
-    const newPost = await db.post.create({
-      data: {
-        title,
-        description,
-        type: status,
-        authorId: session.user.id,
-      },
+    const { title, status, description } = PostValidator.parse({
+      title: titleData,
+      description: descriptionData,
+      status: statusData,
+      postImg: postImgData,
     });
+
+    let newPost;
+
+    if (postImgData) {
+      const { data } = await utapi.uploadFiles(postImgData);
+      newPost = await db.post.create({
+        data: {
+          title,
+          description,
+          type: status,
+          authorId: session.user.id,
+          imgKey: data?.key,
+          imgUrl: data?.url,
+        },
+      });
+    } else {
+      newPost = await db.post.create({
+        data: {
+          title,
+          description,
+          type: status,
+          authorId: session.user.id,
+        },
+      });
+    }
 
     return NextResponse.json({ ok: true, postId: newPost.id });
   } catch (error) {
