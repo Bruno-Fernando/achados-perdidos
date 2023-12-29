@@ -6,13 +6,14 @@ async function page() {
 
   return (
     <div className="flex flex-col gap-4">
-      {data?.map(({ title, description, id, type, createdAt }) => (
+      {data?.map(({ title, description, id, type, createdAt, imgUrl }) => (
         <PostCard
           key={id}
           title={title}
           description={description}
           lost={type === "LOST"}
           createdAt={createdAt || ""}
+          imgUrl={imgUrl}
         />
       ))}
     </div>

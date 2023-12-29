@@ -5,21 +5,25 @@ interface Props {
   description: string;
   createdAt: string | Date;
   lost?: boolean;
+  imgUrl?: string | null;
 }
 
-function PostCard({ title, description, lost, createdAt }: Props) {
+function PostCard({ title, description, lost, createdAt, imgUrl }: Props) {
   return (
     <div
       className={`rounded-lg border border-l-8 ${
         lost ? "border-l-red-600" : "border-l-green-600"
       } hover:cursor-pointer`}
     >
-      <Image
-        alt="post image"
-        src="https://picsum.photos/600/300"
-        width={600}
-        height={300}
-      />
+      <div className="relative h-72 w-full">
+        <Image
+          alt="Imagem do post"
+          src={imgUrl ?? "/logo.svg"}
+          fill
+          priority
+          className="object-contain"
+        />
+      </div>
 
       <p className="pr-3 text-end">
         {new Date(createdAt.toString()).toLocaleDateString()}
