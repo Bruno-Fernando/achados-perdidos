@@ -25,7 +25,7 @@ export const getPost = async (id: string) => {
     throw new Error("Unauthorized");
   }
 
-  const post = await db.post.findUnique({
+  const post = await db.post.findUniqueOrThrow({
     where: {
       id,
     },
