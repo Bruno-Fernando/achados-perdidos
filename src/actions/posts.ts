@@ -18,3 +18,26 @@ export const getPosts = async (page: number) => {
   });
   return posts;
 };
+
+export const getPost = async (id: string) => {
+  const session = await getAuthSession();
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
+
+  const post = await db.post.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      author: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  return post;
+};
