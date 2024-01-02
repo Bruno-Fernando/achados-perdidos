@@ -18,6 +18,7 @@ async function NewPost({
       {data?.map(({ title, description, id, type, createdAt, imgUrl }) => (
         <PostCard
           key={id}
+          id={id}
           title={title}
           description={description}
           lost={type === "LOST"}

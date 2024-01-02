@@ -8,7 +8,7 @@ function Header() {
     <header className="fixed z-50 flex h-12 w-full items-center justify-center border-b bg-background px-14 md:justify-between">
       <MobileDrawer />
 
-      <Link href="home">
+      <Link href="/home">
         <Avatar className="cursor-pointer bg-black dark:bg-transparent">
           <AvatarImage src="/logo.svg" />
         </Avatar>

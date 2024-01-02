@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
+  id: string;
   title: string;
   description: string;
   createdAt: string | Date;
@@ -8,12 +10,13 @@ interface Props {
   imgUrl?: string | null;
 }
 
-function PostCard({ title, description, lost, createdAt, imgUrl }: Props) {
+function PostCard({ id, title, description, lost, createdAt, imgUrl }: Props) {
   return (
-    <div
+    <Link
+      href={`/post/${id}`}
       className={`rounded-lg border border-l-8 ${
         lost ? "border-l-red-600" : "border-l-green-600"
-      } hover:cursor-pointer`}
+      }`}
     >
       <div className="relative h-72 w-full">
         <Image
@@ -37,7 +40,7 @@ function PostCard({ title, description, lost, createdAt, imgUrl }: Props) {
         </h3>
         <p>{description}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 
