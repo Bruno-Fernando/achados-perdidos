@@ -11,6 +11,7 @@ import { getAuthSession } from "@/lib/auth";
 import { UserCircle2 } from "lucide-react";
 import LogoutBtn from "./LogoutBtn";
 import ToggleDarkMode from "./ToggleDarkMode";
+import Link from "next/link";
 
 async function Menu() {
   const session = await getAuthSession();
@@ -30,9 +31,11 @@ async function Menu() {
           {session?.user.name}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem disabled>
-          <UserCircle2 className="mr-2 h-4 w-4" />
-          Perfil
+        <DropdownMenuItem asChild>
+          <Link href="/profile">
+            <UserCircle2 className="mr-2 h-4 w-4" />
+            Perfil
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <ToggleDarkMode />

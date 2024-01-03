@@ -41,11 +41,15 @@ async function MobileDrawer() {
           <SheetTitle>Achados e Perdidos</SheetTitle>
 
           <SheetDescription>
-            <Avatar className="mx-auto mb-2">
-              <AvatarImage src={session?.user.image || ""} />
-              <AvatarFallback>{avatarFallback}</AvatarFallback>
-            </Avatar>
-            <p className=" capitalize">{session?.user.name}</p>
+            <SheetClose asChild>
+              <Link href="/profile">
+                <Avatar className="mx-auto mb-2">
+                  <AvatarImage src={session?.user.image || ""} />
+                  <AvatarFallback>{avatarFallback}</AvatarFallback>
+                </Avatar>
+                <p className="capitalize">{session?.user.name}</p>
+              </Link>
+            </SheetClose>
           </SheetDescription>
         </SheetHeader>
 
