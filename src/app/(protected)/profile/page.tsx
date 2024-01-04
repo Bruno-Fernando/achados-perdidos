@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Separator } from "@/components/ui/Separator";
 import { getAuthSession } from "@/lib/auth";
-import PostCard from "../home/_components/PostCard";
+import PostCard from "@/components/PostCard";
 
 async function Profile() {
   const session = await getAuthSession();
@@ -20,6 +20,19 @@ async function Profile() {
       </div>
 
       <Separator className="my-4" />
+
+      <p>Minhas postagens:</p>
+
+      <div className="mt-4 flex flex-col gap-4">
+        <PostCard
+          id="clqr09fbz00015w787ifkbizd"
+          title="Test"
+          description="Description"
+          lost={false}
+          createdAt={new Date()}
+          enableEditDelete
+        />
+      </div>
     </>
   );
 }

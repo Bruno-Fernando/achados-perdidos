@@ -1,4 +1,4 @@
-import PostCard from "./_components/PostCard";
+import PostCard from "@/components/PostCard";
 import { getPosts } from "@/actions/posts";
 import PostPagination from "./_components/PostPagination";
 
