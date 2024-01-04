@@ -19,7 +19,7 @@ export const getPosts = async (page: number) => {
   return posts;
 };
 
-export const getPost = async (id: string) => {
+export const getPostById = async (id: string) => {
   const session = await getAuthSession();
   if (!session?.user) {
     throw new Error("Unauthorized");
@@ -40,4 +40,19 @@ export const getPost = async (id: string) => {
   });
 
   return post;
+};
+
+export const getUserPosts = async () => {
+  const session = await getAuthSession();
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
+
+  const userPosts = await db.post.findMany({
+    where: {
+      authorId: session.user.id,
+    },
+  });
+
+  return userPosts;
 };

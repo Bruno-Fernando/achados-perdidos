@@ -1,4 +1,4 @@
-import { getPost } from "@/actions/posts";
+import { getPostById } from "@/actions/posts";
 import { Icons } from "@/components/ExternalIcons";
 import { buttonVariants } from "@/components/ui/Button";
 import { Separator } from "@/components/ui/Separator";
@@ -8,7 +8,7 @@ import Image from "next/image";
 import CopyToClipboard from "./_components/CopyToClipboard";
 
 async function Post({ params }: { params: { postId: string } }) {
-  const data = await getPost(params.postId);
+  const data = await getPostById(params.postId);
 
   return (
     <div>
