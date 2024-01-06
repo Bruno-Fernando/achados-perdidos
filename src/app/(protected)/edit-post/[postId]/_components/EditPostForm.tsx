@@ -57,6 +57,12 @@ function EditPostForm({
       });
       router.push("/home");
     },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Ops, aconteceu um problema, tente novamente mais tarde",
+      });
+    },
   });
 
   const onSubmit = (values: PostPayload) => {
