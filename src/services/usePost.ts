@@ -1,12 +1,15 @@
 import { Prisma } from "@prisma/client";
 import {
-  QueryKey,
   UseMutationOptions,
-  UseQueryOptions,
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
 import axios from "axios";
+
+interface PutPostParams {
+  postId: string;
+  body: FormData;
+}
 
 const postNewPost = async (body: any) => {
   const { data } = await axios.post("/api/post", body);
@@ -20,16 +23,39 @@ export const useCreatePost = (
   return useMutation({ mutationFn: postNewPost, ...options });
 };
 
-export const getPost = async (): Promise<Prisma.PostCreateInput[]> => {
+const getUserPostById = async (
+  postId: string,
+): Promise<Prisma.PostCreateInput> => {
   const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}api/post`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}api/post/${postId}`,
   );
 
   return data;
 };
 
-export const useGetPosts = (
-  options?: Omit<UseQueryOptions<any, unknown, any, QueryKey>, "queryFn">,
+export const useGetUserPostById = (postId: string) => {
+  return useQuery({
+    queryKey: ["getUserPostById", postId],
+    queryFn: () => getUserPostById(postId),
+  });
+};
+
+const putPost = async ({
+  postId,
+  body,
+}: PutPostParams): Promise<Prisma.PostCreateInput> => {
+  const { data } = await axios.put(`/api/post/${postId}`, body);
+
+  return data;
+};
+
+export const useUpdatePost = (
+  options: UseMutationOptions<
+    Prisma.PostCreateInput,
+    Error,
+    PutPostParams,
+    unknown
+  >,
 ) => {
-  return useQuery({ queryKey: ["todos"], queryFn: getPost });
+  return useMutation({ mutationFn: putPost, ...options });
 };

@@ -23,13 +23,13 @@ export const PostValidator = z.object({
   postImg: z
     .any()
     .refine((file) => {
-      if (file?.[0]) {
+      if (file?.[0] && file?.[0] !== "h") {
         return file?.[0].size <= 4000000;
       }
       return true;
     }, "Tamaho máximo de 4MB")
     .refine((file) => {
-      if (file?.[0]) {
+      if (file?.[0] && file?.[0] !== "h") {
         return ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type);
       }
       return true;

@@ -56,3 +56,24 @@ export const getUserPosts = async () => {
 
   return userPosts;
 };
+
+export const getUserPostById = async (id: string) => {
+  const session = await getAuthSession();
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
+
+  const post = await db.post.findUnique({
+    where: { id, authorId: session.user.id },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      type: true,
+      imgUrl: true,
+      imgKey: true,
+    },
+  });
+
+  return post;
+};
