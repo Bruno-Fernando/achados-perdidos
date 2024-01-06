@@ -59,89 +59,93 @@ function NewPost() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Título</FormLabel>
-              <FormControl>
-                <Input
-                  maxLength={50}
-                  {...field}
-                  disabled={isPending}
-                  placeholder="O que você perdeu ou encontrou?"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <>
+      <h3 className="mb-4 text-xl font-bold">Nova postagem</h3>
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Descrição</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Conte como você encontrou o objeto ou a última vez que o viu"
-                  className="resize-none"
-                  rows={4}
-                  maxLength={150}
-                  {...field}
-                  disabled={isPending}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Título</FormLabel>
+                <FormControl>
+                  <Input
+                    maxLength={50}
+                    {...field}
+                    disabled={isPending}
+                    placeholder="O que você perdeu ou encontrou?"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormLabel>Tipo</FormLabel>
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-col space-y-1"
-                  disabled={isPending}
-                >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="LOST" />
-                    </FormControl>
-                    <FormLabel className="font-normal">Perdido</FormLabel>
-                  </FormItem>
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Descrição</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Conte como você encontrou o objeto ou a última vez que o viu"
+                    className="resize-none"
+                    rows={4}
+                    maxLength={150}
+                    {...field}
+                    disabled={isPending}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="FOUND" />
-                    </FormControl>
-                    <FormLabel className="font-normal">Encontrado</FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Tipo</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex flex-col space-y-1"
+                    disabled={isPending}
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="LOST" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Perdido</FormLabel>
+                    </FormItem>
 
-        <UploadPostImg isLoading={isPending} />
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="FOUND" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Encontrado</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button type="submit" className="mx-auto flex" disabled={isPending}>
-          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Criar novo post
-        </Button>
-      </form>
-    </Form>
+          <UploadPostImg isLoading={isPending} />
+
+          <Button type="submit" className="mx-auto flex" disabled={isPending}>
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Postar
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 }
 

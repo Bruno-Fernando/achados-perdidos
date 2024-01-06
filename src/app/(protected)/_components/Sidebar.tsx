@@ -23,9 +23,9 @@ function Sidebar() {
           </Button>
 
           <Button asChild variant="default" className="mt-4 rounded-full">
-            <Link href="new-post">
+            <Link href="/new-post">
               <PlusCircle className="mr-2 h-4 w-4" />
-              Novo post
+              Nova postagem
             </Link>
           </Button>
         </div>

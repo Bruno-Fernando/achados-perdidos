@@ -12,12 +12,13 @@ async function Profile() {
 
       <Separator className="my-4" />
 
-      <p>Minhas postagens:</p>
+      <h3 className="text-xl font-bold">Minhas postagens:</h3>
 
       <div className="mt-4 flex flex-col gap-4">
         {userPosts.map(
           ({ id, title, description, type, createdAt, imgUrl }) => (
             <PostCard
+              key={id}
               id={id}
               title={title}
               description={description}
