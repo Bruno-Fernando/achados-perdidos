@@ -63,7 +63,7 @@ export const getUserPostById = async (id: string) => {
     throw new Error("Unauthorized");
   }
 
-  const post = await db.post.findUnique({
+  const post = await db.post.findUniqueOrThrow({
     where: { id, authorId: session.user.id },
     select: {
       id: true,
