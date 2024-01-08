@@ -1,5 +1,6 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { DeletePostValidator } from "@/lib/validators/deletePost";
 import { PostValidator } from "@/lib/validators/newPost";
 import { utapi } from "@/utils/uploadthing";
 import { NextResponse } from "next/server";
@@ -99,5 +100,48 @@ export async function PUT(
     }
 
     return new Response("Could not update post", { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { postId: string } },
+) {
+  try {
+    const session = await getAuthSession();
+    if (!session?.user) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    const body = await req.json();
+    const { returned, feedback } = DeletePostValidator.parse(body);
+
+    const post = await db.post.findUnique({
+      where: { id: params.postId, deleted: false },
+    });
+    if (post?.imgKey) {
+      await utapi.deleteFiles(post.imgKey);
+    }
+
+    await db.post.update({
+      where: {
+        id: params.postId,
+      },
+      data: {
+        deleted: true,
+        returned: returned === "yes",
+        feedback,
+        imgKey: null,
+        imgUrl: null,
+      },
+    });
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(error.message, { status: 422 });
+    }
+
+    return new Response("Could not delete post", { status: 500 });
   }
 }
