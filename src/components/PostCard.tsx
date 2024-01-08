@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import DeletePostBtn from "./DeletePostBtn";
 
 interface Props {
   id: string;
@@ -65,9 +66,8 @@ function PostCard({
               <Pencil className="mr-2 h-4 w-4" />
               Editar
             </Link>
-            <Button variant="destructive">
-              <Trash2 className="mr-2 h-4 w-4" /> Excluir
-            </Button>
+
+            <DeletePostBtn title={title} lost={lost} />
           </div>
         </>
       )}
