@@ -67,12 +67,15 @@ model Post {
   title       String
   description String
   type        PostType
+  imgKey      String?
+  imgUrl      String?
   author      User     @relation(fields: [authorId], references: [id])
   authorId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  imgKey      String?
-  imgUrl      String?
+  deleted     Boolean  @default(false)
+  returned    Boolean?
+  feedback    String?
 
   @@index([authorId])
 }
