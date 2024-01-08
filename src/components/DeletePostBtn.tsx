@@ -31,6 +31,7 @@ import {
 } from "@/lib/validators/deletePost";
 import { useDeletePost } from "@/services/usePost";
 import { useToast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   id: string;
@@ -39,8 +40,10 @@ interface Props {
 }
 
 function DeletePostBtn({ id, title, lost }: Props) {
-  const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
   const { toast } = useToast();
+
+  const [open, setOpen] = useState(false);
 
   const form = useForm<DeletePostPayload>({
     resolver: zodResolver(DeletePostValidator),
@@ -52,6 +55,8 @@ function DeletePostBtn({ id, title, lost }: Props) {
 
   const { mutate: deletePost, isPending } = useDeletePost({
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getUserPosts"] });
+
       toast({
         title: "Sucesso",
         description: "Seu post acaba de ser deletado!",
