@@ -15,6 +15,9 @@ export const getPosts = async (page: number) => {
     orderBy: { createdAt: "desc" },
     skip: (page - 1) * PER_PAGE,
     take: PER_PAGE,
+    where: {
+      deleted: false,
+    },
   });
   return posts;
 };
@@ -28,6 +31,7 @@ export const getPostById = async (id: string) => {
   const post = await db.post.findUniqueOrThrow({
     where: {
       id,
+      deleted: false,
     },
     include: {
       author: {
@@ -51,6 +55,7 @@ export const getUserPosts = async () => {
   const userPosts = await db.post.findMany({
     where: {
       authorId: session.user.id,
+      deleted: false,
     },
   });
 
@@ -64,7 +69,7 @@ export const getUserPostById = async (id: string) => {
   }
 
   const post = await db.post.findUniqueOrThrow({
-    where: { id, authorId: session.user.id },
+    where: { id, authorId: session.user.id, deleted: false },
     select: {
       id: true,
       title: true,

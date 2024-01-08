@@ -17,7 +17,7 @@ export async function GET(
     }
 
     const post = await db.post.findUnique({
-      where: { id: params.postId, authorId: session.user.id },
+      where: { id: params.postId, authorId: session.user.id, deleted: false },
     });
 
     return NextResponse.json(post);
@@ -54,7 +54,7 @@ export async function PUT(
     let newPost;
 
     const post = await db.post.findUnique({
-      where: { id: params.postId },
+      where: { id: params.postId, deleted: false },
     });
 
     if (post?.imgKey && deleteImg) {

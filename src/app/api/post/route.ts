@@ -69,7 +69,12 @@ export async function GET(req: Request) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const posts = await db.post.findMany({ orderBy: { createdAt: "desc" } });
+    const posts = await db.post.findMany({
+      orderBy: { createdAt: "desc" },
+      where: {
+        deleted: false,
+      },
+    });
 
     return NextResponse.json(posts);
   } catch (error) {
