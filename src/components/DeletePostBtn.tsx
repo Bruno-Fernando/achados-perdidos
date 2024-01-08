@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/AlertDialog";
 import { Button } from "./ui/Button";
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "./ui/RadioGroup";
 import { useState } from "react";
 import {
@@ -29,14 +29,18 @@ import {
   DeletePostPayload,
   DeletePostValidator,
 } from "@/lib/validators/deletePost";
+import { useDeletePost } from "@/services/usePost";
+import { useToast } from "@/hooks/use-toast";
 
 interface Props {
+  id: string;
   title: string;
   lost?: boolean;
 }
 
-function DeletePostBtn({ title, lost }: Props) {
+function DeletePostBtn({ id, title, lost }: Props) {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<DeletePostPayload>({
     resolver: zodResolver(DeletePostValidator),
@@ -46,12 +50,30 @@ function DeletePostBtn({ title, lost }: Props) {
     },
   });
 
+  const { mutate: deletePost, isPending } = useDeletePost({
+    onSuccess: () => {
+      toast({
+        title: "Sucesso",
+        description: "Seu post acaba de ser deletado!",
+      });
+
+      toggleOpen();
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        variant: "destructive",
+        description: "Ops, aconteceu um problema, tente novamente mais tarde",
+      });
+    },
+  });
+
   const toggleOpen = () => {
     setOpen(!open);
   };
 
   const onSubmit = (values: DeletePostPayload) => {
-    console.log(values);
+    deletePost({ postId: id, body: values });
   };
 
   return (
@@ -84,7 +106,7 @@ function DeletePostBtn({ title, lost }: Props) {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                       className="flex flex-col space-y-1"
-                      // disabled={isPending}
+                      disabled={isPending}
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
@@ -119,7 +141,7 @@ function DeletePostBtn({ title, lost }: Props) {
                       rows={4}
                       maxLength={150}
                       {...field}
-                      // disabled={isPending}
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -128,14 +150,15 @@ function DeletePostBtn({ title, lost }: Props) {
             />
 
             <AlertDialogFooter>
-              <AlertDialogCancel type="button">Cancelar</AlertDialogCancel>
+              <AlertDialogCancel type="button" disabled={isPending}>
+                Cancelar
+              </AlertDialogCancel>
               <Button
                 type="submit"
                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                disabled={isPending}
               >
-                {/* {isPending && (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  )} */}
+                {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Excluir
               </Button>
             </AlertDialogFooter>

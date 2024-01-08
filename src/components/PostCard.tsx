@@ -67,7 +67,7 @@ function PostCard({
               Editar
             </Link>
 
-            <DeletePostBtn title={title} lost={lost} />
+            <DeletePostBtn id={id} title={title} lost={lost} />
           </div>
         </>
       )}

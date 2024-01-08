@@ -1,3 +1,4 @@
+import { DeletePostPayload } from "@/lib/validators/deletePost";
 import { Prisma } from "@prisma/client";
 import {
   UseMutationOptions,
@@ -9,6 +10,11 @@ import axios from "axios";
 interface PutPostParams {
   postId: string;
   body: FormData;
+}
+
+interface DeletePostParams {
+  postId: string;
+  body: DeletePostPayload;
 }
 
 const postNewPost = async (body: any) => {
@@ -58,4 +64,16 @@ export const useUpdatePost = (
   >,
 ) => {
   return useMutation({ mutationFn: putPost, ...options });
+};
+
+const deletePost = async ({ postId, body }: DeletePostParams) => {
+  const { data } = await axios.delete(`/api/post/${postId}`, { data: body });
+
+  return data;
+};
+
+export const useDeletePost = (
+  options?: UseMutationOptions<any, Error, DeletePostParams, unknown>,
+) => {
+  return useMutation({ mutationFn: deletePost, ...options });
 };

@@ -60,6 +60,7 @@ function EditPostForm({
     onError: () => {
       toast({
         title: "Erro",
+        variant: "destructive",
         description: "Ops, aconteceu um problema, tente novamente mais tarde",
       });
     },
