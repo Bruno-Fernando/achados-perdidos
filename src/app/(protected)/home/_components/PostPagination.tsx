@@ -10,9 +10,14 @@ import {
 
 interface Props {
   page: number;
+  count: number;
 }
 
-function PostPagination({ page }: Props) {
+const PER_PAGE = 5;
+
+function PostPagination({ page, count }: Props) {
+  const hasNextPage = 0 < count - page * PER_PAGE;
+
   return (
     <Pagination>
       <PaginationContent>
@@ -24,7 +29,10 @@ function PostPagination({ page }: Props) {
         </PaginationItem>
 
         <PaginationItem>
-          <PaginationNext href={`/home?page=${page + 1}`} />
+          <PaginationNext
+            href={`/home?page=${page + 1}`}
+            isActive={!hasNextPage}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

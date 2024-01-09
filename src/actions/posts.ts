@@ -5,21 +5,47 @@ import { db } from "@/lib/db";
 
 const PER_PAGE = 5;
 
-export const getPosts = async (page: number) => {
+interface GetPostsPayload {
+  page: number;
+  search?: string;
+}
+
+export const getPosts = async ({ page, search }: GetPostsPayload) => {
   const session = await getAuthSession();
   if (!session?.user) {
     throw new Error("Unauthorized");
   }
 
-  const posts = await db.post.findMany({
-    orderBy: { createdAt: "desc" },
-    skip: (page - 1) * PER_PAGE,
-    take: PER_PAGE,
-    where: {
-      deleted: false,
-    },
-  });
-  return posts;
+  const transactionPosts = await db.$transaction([
+    db.post.count({
+      where: {
+        deleted: false,
+        OR: [
+          { title: { contains: search ?? "" } },
+          { description: { contains: search ?? "" } },
+        ],
+      },
+    }),
+    db.post.findMany({
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * PER_PAGE,
+      take: PER_PAGE,
+      where: {
+        deleted: false,
+        OR: [
+          { title: { contains: search ?? "" } },
+          { description: { contains: search ?? "" } },
+        ],
+      },
+    }),
+  ]);
+
+  const returnObj = {
+    count: transactionPosts[0],
+    posts: transactionPosts[1],
+  };
+
+  return returnObj;
 };
 
 export const getPostById = async (id: string) => {
