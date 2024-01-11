@@ -11,10 +11,6 @@ function Sidebar() {
           <SearchForm />
 
           <Button variant="ghost" className="justify-start">
-            <Filter className="mr-2 h-4 w-4" />
-            Filtrar
-          </Button>
-          <Button variant="ghost" className="justify-start">
             <ArrowDownWideNarrow className="mr-2 h-4 w-4" />
             Ordenar
           </Button>

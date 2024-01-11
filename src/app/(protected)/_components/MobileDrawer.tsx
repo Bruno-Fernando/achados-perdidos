@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 import { Separator } from "@/components/ui/Separator";
 import {
   Sheet,
@@ -13,16 +12,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/Sheet";
 import { getAuthSession } from "@/lib/auth";
-import {
-  ArrowDownWideNarrow,
-  Filter,
-  Menu,
-  PlusCircle,
-  Search,
-} from "lucide-react";
+import { ArrowDownWideNarrow, Menu, PlusCircle } from "lucide-react";
 import LogoutBtn from "./LogoutBtn";
 import ToggleDarkMode from "./ToggleDarkMode";
 import Link from "next/link";
+import SearchForm from "./SearchForm";
 
 async function MobileDrawer() {
   const session = await getAuthSession();
@@ -47,7 +41,7 @@ async function MobileDrawer() {
                   <AvatarImage src={session?.user.image || ""} />
                   <AvatarFallback>{avatarFallback}</AvatarFallback>
                 </Avatar>
-                <p className="capitalize">{session?.user.name}</p>
+                <span className="capitalize">{session?.user.name}</span>
               </Link>
             </SheetClose>
           </SheetDescription>
@@ -56,15 +50,8 @@ async function MobileDrawer() {
         <Separator className="my-4" />
 
         <div className="relative mb-4 flex flex-col gap-4">
-          <div>
-            <Input placeholder="Pesquisar" />
-            <Search className="absolute right-2 top-2.5 h-5 w-5 hover:cursor-pointer" />
-          </div>
+          <SearchForm />
 
-          <Button variant="ghost" className="justify-start">
-            <Filter className="mr-2 h-4 w-4" />
-            Filtrar
-          </Button>
           <Button variant="ghost" className="justify-start">
             <ArrowDownWideNarrow className="mr-2 h-4 w-4" />
             Ordenar

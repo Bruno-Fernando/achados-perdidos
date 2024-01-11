@@ -72,7 +72,7 @@ function FilterPostForm({ closeDialog }: Props) {
           )}
         />
 
-        <DialogFooter>
+        <DialogFooter className="gap-4">
           <DialogClose asChild>
             <Button variant="secondary" type="button">
               Cancelar
