@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Pagination,
   PaginationContent,
@@ -7,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/Pagination";
+import useQueryParams from "@/hooks/useQueryParams";
 
 interface Props {
   page: number;
@@ -16,6 +19,8 @@ interface Props {
 const PER_PAGE = 5;
 
 function PostPagination({ page, count }: Props) {
+  const { createQueryString } = useQueryParams();
+
   const hasNextPage = 0 < count - page * PER_PAGE;
 
   return (
@@ -23,14 +28,14 @@ function PostPagination({ page, count }: Props) {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={`/home?page=${page - 1}`}
+            href={`/home?${createQueryString("page", page - 1)}`}
             isActive={page === 1}
           />
         </PaginationItem>
 
         <PaginationItem>
           <PaginationNext
-            href={`/home?page=${page + 1}`}
+            href={`/home?${createQueryString("page", page + 1)}`}
             isActive={!hasNextPage}
           />
         </PaginationItem>
