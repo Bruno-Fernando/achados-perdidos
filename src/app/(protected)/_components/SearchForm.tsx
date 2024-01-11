@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
+import useQueryParams from "@/hooks/useQueryParams";
 import { SearchPayload, SearchValidator } from "@/lib/validators/search";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Search, X } from "lucide-react";
@@ -18,6 +19,7 @@ import { useForm } from "react-hook-form";
 function SearchForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { createQueryString } = useQueryParams();
 
   const form = useForm<SearchPayload>({
     resolver: zodResolver(SearchValidator),
@@ -26,24 +28,17 @@ function SearchForm() {
     },
   });
 
-  // useCallback
-  const createQueryString = (name: string, value: string) => {
-    // const params = new URLSearchParams(searchParams.toString())
-    const params = new URLSearchParams();
-    params.set(name, value);
-
-    return params.toString();
-  };
-
   const onSubmit = (values: SearchPayload) => {
-    router.push(`?${createQueryString("search", values.search)}`);
+    router.push(`/home?${createQueryString("search", values.search)}`);
   };
 
   const resetSearch = () => {
     form.setValue("search", "");
 
     if (searchParams.get("search")) {
-      router.push("/home");
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("search");
+      router.push(`/home?${params.toString()}`);
     }
   };
 
