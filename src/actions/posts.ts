@@ -2,15 +2,17 @@
 
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { $Enums } from "@prisma/client";
 
 const PER_PAGE = 5;
 
 interface GetPostsPayload {
   page: number;
   search?: string;
+  type?: $Enums.PostType;
 }
 
-export const getPosts = async ({ page, search }: GetPostsPayload) => {
+export const getPosts = async ({ page, search, type }: GetPostsPayload) => {
   const session = await getAuthSession();
   if (!session?.user) {
     throw new Error("Unauthorized");
@@ -24,6 +26,7 @@ export const getPosts = async ({ page, search }: GetPostsPayload) => {
           { title: { contains: search ?? "" } },
           { description: { contains: search ?? "" } },
         ],
+        AND: [{ type }],
       },
     }),
     db.post.findMany({
@@ -36,6 +39,7 @@ export const getPosts = async ({ page, search }: GetPostsPayload) => {
           { title: { contains: search ?? "" } },
           { description: { contains: search ?? "" } },
         ],
+        AND: [{ type }],
       },
     }),
   ]);
