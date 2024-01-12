@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/Dialog";
 import { Filter } from "lucide-react";
-import FilterPostForm from "../../_components/FilterPostForm";
+import FilterPostForm from "./FilterPostForm";
 import { useState } from "react";
 
 function FilterPost() {
