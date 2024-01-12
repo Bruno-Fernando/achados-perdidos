@@ -20,7 +20,7 @@ function InfoDialog() {
             <p className="mt-3">
               Esta aplicação é destinada apenas para usuários que estão
               vinculados na UFCG, portanto, como forma de validar o vínculo,
-              usamos a matrícula e senha do controle acadêmico.
+              usamos a matrícula e um RDM.
             </p>
             <p className="mb-2 mt-3 font-bold">Esse dados são salvos?</p>
             <p>

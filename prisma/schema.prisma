@@ -51,6 +51,7 @@ model User {
   image              String?
   accounts           Account[]
   sessions           Session[]
+  posts              Post[]
 }
 
 model VerificationToken {
@@ -59,4 +60,27 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  type        PostType
+  imgKey      String?
+  imgUrl      String?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deleted     Boolean  @default(false)
+  returned    Boolean?
+  feedback    String?
+
+  @@index([authorId])
+}
+
+enum PostType {
+  LOST
+  FOUND
 }

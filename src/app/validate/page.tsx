@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   UfcgRegistrationCodeValidator,
   ValidateRegistrationCodePayload,
@@ -10,7 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -24,6 +24,7 @@ import {
 import ExtFormContainer from "@/components/ExtFormContainer";
 import InfoDialog from "./_components/InfoDialog";
 import { useUpdateValidatedUser, useValidate } from "@/services/useValidate";
+import { Label } from "@/components/ui/Label";
 
 function Validate() {
   const { toast } = useToast();
@@ -31,13 +32,11 @@ function Validate() {
   const router = useRouter();
 
   const [loading, setIsloading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<ValidateRegistrationCodePayload>({
     resolver: zodResolver(UfcgRegistrationCodeValidator),
     defaultValues: {
       registrationCode: "",
-      password: "",
     },
   });
 
@@ -53,8 +52,18 @@ function Validate() {
   };
 
   const { mutate: validateUser } = useValidate({
-    onSuccess: () => {
-      updateUser();
+    onSuccess: (data) => {
+      if (data.isAuth) {
+        updateUser();
+      } else {
+        toast({
+          title: "Erro",
+          description: "Não foi possível verificar o seu número de matrícula",
+          variant: "destructive",
+        });
+        form.reset();
+        setIsloading(false);
+      }
     },
     onError: handleError,
   });
@@ -67,13 +76,12 @@ function Validate() {
     onError: handleError,
   });
 
-  const onSubmit = (values: ValidateRegistrationCodePayload) => {
-    validateUser(values);
-    setIsloading(true);
-  };
+  const onSubmit = async (values: ValidateRegistrationCodePayload) => {
+    const formData = new FormData();
+    formData.append("rdmfile", values.rdmfile[0]);
+    formData.append("registrationCode", values.registrationCode);
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+    validateUser(formData);
   };
 
   return (
@@ -98,37 +106,24 @@ function Validate() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="relative">
-                <FormLabel>Senha</FormLabel>
-                <FormControl>
-                  <>
-                    <Input
-                      placeholder="Digite sua senha"
-                      type={showPassword ? "text" : "password"}
-                      {...field}
-                      disabled={loading}
-                    />
-                    {showPassword ? (
-                      <EyeOff
-                        className="absolute right-2 top-8 hover:cursor-pointer"
-                        onClick={toggleShowPassword}
-                      />
-                    ) : (
-                      <Eye
-                        className="absolute right-2 top-8 hover:cursor-pointer"
-                        onClick={toggleShowPassword}
-                      />
-                    )}
-                  </>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="space-y-2">
+            <Label
+              htmlFor="rdm4"
+              className={form.formState.errors.rdmfile && "text-destructive"}
+            >
+              RDM
+            </Label>
+            <Input
+              id="rdm4"
+              type="file"
+              accept=".pdf"
+              {...form.register("rdmfile")}
+            />
+            <span className="text-sm font-medium text-destructive">
+              {form.formState.errors.rdmfile?.message?.toString()}
+            </span>
+          </div>
+
           <Button
             type="submit"
             disabled={loading}
@@ -139,8 +134,6 @@ function Validate() {
           </Button>
         </form>
       </Form>
-
-      {loading && <p className="mt-6 text-sm">Isso pode demorar um pouco...</p>}
 
       <InfoDialog />
     </ExtFormContainer>
