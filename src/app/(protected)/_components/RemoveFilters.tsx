@@ -10,7 +10,9 @@ function RemoveFilters() {
   const searchParams = useSearchParams();
 
   const params = new URLSearchParams(searchParams.toString());
-  const statusFilter = params.get("status") as $Enums.PostType;
+  const statusFilter = Object.values($Enums.PostType).includes(
+    params.get("status") as $Enums.PostType,
+  );
   const dateFilter = params.get("date");
 
   const removeStatusFilter = () => {
