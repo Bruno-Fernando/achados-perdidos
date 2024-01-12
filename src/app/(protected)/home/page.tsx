@@ -2,10 +2,10 @@ import PostCard from "@/components/PostCard";
 import { getPosts } from "@/actions/posts";
 import PostPagination from "./_components/PostPagination";
 import { Separator } from "@/components/ui/Separator";
-import FilterPost from "../_components/FilterPost";
+import FilterPost from "./_components/FilterPost";
 import { $Enums } from "@prisma/client";
-import RemoveFilters from "../_components/RemoveFilters";
-import SortPosts from "../_components/SortPosts";
+import RemoveFilters from "./_components/RemoveFilters";
+import SortPosts from "./_components/SortPosts";
 
 async function NewPost({
   searchParams,
