@@ -3,10 +3,7 @@
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -25,7 +22,7 @@ function FilterPost() {
   return (
     <Dialog open={open} onOpenChange={toggleOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="justify-start">
+        <Button variant="ghost" className="ml-auto">
           <Filter className="mr-2 h-4 w-4" />
           Filtrar
         </Button>

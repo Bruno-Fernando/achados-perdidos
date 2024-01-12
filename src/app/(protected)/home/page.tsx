@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/Separator";
 import FilterPost from "../_components/FilterPost";
 import { $Enums } from "@prisma/client";
 import RemoveFilters from "../_components/RemoveFilters";
+import SortPosts from "../_components/SortPosts";
 
 async function NewPost({
   searchParams,
@@ -14,6 +15,7 @@ async function NewPost({
     search?: string;
     status?: string;
     date?: string;
+    order?: string;
   };
 }) {
   const currentPage = Number(searchParams?.page) || 1;
@@ -26,20 +28,23 @@ async function NewPost({
       ? (searchParams?.status as $Enums.PostType)
       : undefined;
   const date = searchParams?.date ?? "";
+  const order = searchParams?.order ?? "";
 
   const { count, posts } = await getPosts({
     page: currentPage,
     search,
     type: status,
     date,
+    order,
   });
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
         <p>Total de itens: {count}</p>
 
         <FilterPost />
+        <SortPosts />
       </div>
       <RemoveFilters />
 

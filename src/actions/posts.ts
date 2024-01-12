@@ -11,6 +11,7 @@ interface GetPostsPayload {
   search?: string;
   type?: $Enums.PostType;
   date?: string;
+  order?: string;
 }
 
 export const getPosts = async ({
@@ -18,6 +19,7 @@ export const getPosts = async ({
   search,
   type,
   date,
+  order,
 }: GetPostsPayload) => {
   const session = await getAuthSession();
   if (!session?.user) {
@@ -49,7 +51,9 @@ export const getPosts = async ({
       },
     }),
     db.post.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: {
+        createdAt: order === "asc" || order === "desc" ? order : "desc",
+      },
       skip: (page - 1) * PER_PAGE,
       take: PER_PAGE,
       where: {

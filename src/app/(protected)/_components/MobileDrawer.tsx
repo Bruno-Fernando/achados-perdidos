@@ -12,7 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/Sheet";
 import { getAuthSession } from "@/lib/auth";
-import { ArrowDownWideNarrow, Menu, PlusCircle } from "lucide-react";
+import { Menu, PlusCircle } from "lucide-react";
 import LogoutBtn from "./LogoutBtn";
 import ToggleDarkMode from "./ToggleDarkMode";
 import Link from "next/link";
@@ -51,16 +51,11 @@ async function MobileDrawer() {
 
         <div className="relative mb-4 flex flex-col gap-4">
           <SearchForm />
-
-          <Button variant="ghost" className="justify-start">
-            <ArrowDownWideNarrow className="mr-2 h-4 w-4" />
-            Ordenar
-          </Button>
         </div>
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button asChild variant="default" className="mt-4 rounded-full">
+            <Button asChild variant="default" className="mt-8 rounded-full">
               <Link href="new-post">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Nova postagem

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/Button";
-import { ArrowDownWideNarrow, Filter, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import SearchForm from "./SearchForm";
 
@@ -10,12 +10,7 @@ function Sidebar() {
         <div className="ml-auto flex w-full max-w-xs flex-col justify-end gap-2 px-5">
           <SearchForm />
 
-          <Button variant="ghost" className="justify-start">
-            <ArrowDownWideNarrow className="mr-2 h-4 w-4" />
-            Ordenar
-          </Button>
-
-          <Button asChild variant="default" className="mt-4 rounded-full">
+          <Button asChild variant="default" className="mt-8 rounded-full">
             <Link href="/new-post">
               <PlusCircle className="mr-2 h-4 w-4" />
               Nova postagem
