@@ -10,13 +10,22 @@ interface GetPostsPayload {
   page: number;
   search?: string;
   type?: $Enums.PostType;
+  date?: string;
 }
 
-export const getPosts = async ({ page, search, type }: GetPostsPayload) => {
+export const getPosts = async ({
+  page,
+  search,
+  type,
+  date,
+}: GetPostsPayload) => {
   const session = await getAuthSession();
   if (!session?.user) {
     throw new Error("Unauthorized");
   }
+
+  const initialDate = date ? new Date(date) : undefined;
+  const finalDate = date ? new Date(date) : undefined;
 
   const transactionPosts = await db.$transaction([
     db.post.count({
@@ -26,7 +35,17 @@ export const getPosts = async ({ page, search, type }: GetPostsPayload) => {
           { title: { contains: search ?? "" } },
           { description: { contains: search ?? "" } },
         ],
-        AND: [{ type }],
+        AND: [
+          {
+            type,
+            createdAt: {
+              gte: initialDate,
+              lt: finalDate
+                ? new Date(finalDate.setDate(finalDate.getDate() + 1))
+                : undefined,
+            },
+          },
+        ],
       },
     }),
     db.post.findMany({
@@ -39,7 +58,15 @@ export const getPosts = async ({ page, search, type }: GetPostsPayload) => {
           { title: { contains: search ?? "" } },
           { description: { contains: search ?? "" } },
         ],
-        AND: [{ type }],
+        AND: [
+          {
+            type,
+            createdAt: {
+              gte: initialDate,
+              lt: finalDate,
+            },
+          },
+        ],
       },
     }),
   ]);

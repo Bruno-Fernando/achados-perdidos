@@ -13,6 +13,7 @@ async function NewPost({
     page?: string;
     search?: string;
     status?: string;
+    date?: string;
   };
 }) {
   const currentPage = Number(searchParams?.page) || 1;
@@ -24,11 +25,13 @@ async function NewPost({
     )
       ? (searchParams?.status as $Enums.PostType)
       : undefined;
+  const date = searchParams?.date ?? "";
 
   const { count, posts } = await getPosts({
     page: currentPage,
     search,
     type: status,
+    date,
   });
 
   return (
