@@ -32,9 +32,7 @@ export const useCreatePost = (
 const getUserPostById = async (
   postId: string,
 ): Promise<Prisma.PostCreateInput> => {
-  const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}api/post/${postId}`,
-  );
+  const { data } = await axios.get(`api/post/${postId}`);
 
   return data;
 };
