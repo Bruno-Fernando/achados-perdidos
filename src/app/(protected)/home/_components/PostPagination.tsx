@@ -16,7 +16,7 @@ interface Props {
   count: number;
 }
 
-const PER_PAGE = 5;
+const PER_PAGE = 10;
 
 function PostPagination({ page, count }: Props) {
   const { createQueryString } = useQueryParams();

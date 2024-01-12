@@ -4,7 +4,7 @@ import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { $Enums } from "@prisma/client";
 
-const PER_PAGE = 5;
+const PER_PAGE = 10;
 
 interface GetPostsPayload {
   page: number;
