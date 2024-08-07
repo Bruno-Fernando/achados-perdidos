@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Facebook } from "lucide-react";
 import Image from "next/image";
 import CopyToClipboard from "./_components/CopyToClipboard";
+import ClaimObject from "./_components/ClaimObject";
 
 async function Post({ params }: { params: { postId: string } }) {
   const data = await getPostById(params.postId);
@@ -14,7 +15,9 @@ async function Post({ params }: { params: { postId: string } }) {
     <div>
       <p className="text-xl">
         <span
-          className={data?.type === "FOUND" ? "text-green-600" : "text-red-600"}
+          className={`${
+            data?.type === "FOUND" ? "text-green-600" : "text-red-600"
+          } font-bold`}
         >
           {data?.type === "FOUND" ? "Encontrado: " : "Perdido: "}
         </span>
@@ -44,12 +47,29 @@ async function Post({ params }: { params: { postId: string } }) {
 
       <Separator className="my-8" />
 
-      <p>
-        Entre em contato através do e-mail:{" "}
-        <a href={`mailto:${data.author.email}`} className="underline">
-          {data.author.email}
-        </a>
-      </p>
+      <div>
+        <p className="text-lg font-bold">
+          {data?.type === "FOUND"
+            ? "Esse objeto é seu?"
+            : "Você encontrou esse objeto?"}
+        </p>
+        <p>
+          Entre em contato através do e-mail:{" "}
+          <a href={`mailto:${data.author.email}`} className="underline">
+            {data.author.email}
+          </a>
+        </p>
+        <div>
+          Ou avise:
+          <ClaimObject
+            found={data?.type === "FOUND"}
+            title={data?.title}
+            author={data?.author.name}
+          />
+        </div>
+      </div>
+
+      <Separator className="my-8" />
 
       <p className="mb-4">Compartilhar:</p>
 

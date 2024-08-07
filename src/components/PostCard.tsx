@@ -38,7 +38,7 @@ function PostCard({
             src={imgUrl ?? "/logo.svg"}
             fill
             priority
-            className="object-contain"
+            className="bg-black object-contain"
           />
         </div>
 

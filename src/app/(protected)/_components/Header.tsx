@@ -9,7 +9,7 @@ function Header() {
       <MobileDrawer />
 
       <Link href="/home" className="flex items-center">
-        <Avatar className="cursor-pointer bg-black dark:bg-transparent">
+        <Avatar className="mr-2 cursor-pointer bg-black dark:bg-transparent">
           <AvatarImage src="/logo.svg" />
         </Avatar>
         UFCG Finder
