@@ -55,7 +55,11 @@ async function MobileDrawer() {
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button asChild variant="default" className="mt-8 rounded-full">
+            <Button
+              asChild
+              variant="default"
+              className="mt-8 w-full rounded-full"
+            >
               <Link href="new-post">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Nova postagem
