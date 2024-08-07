@@ -7,7 +7,7 @@ import Providers from "@/context/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Achados e perdidos UFCG",
+  title: "UFCG Finder",
   description:
     "Aplição destinada a auxiliar o controle de itens achados e perdidos nas dependências da universidade",
 };

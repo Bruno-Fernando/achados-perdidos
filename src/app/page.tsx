@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-3 p-7 text-center md:p-24">
-      <h1 className="text-2xl font-bold">Achados e perdidos UFCG</h1>
+      <h1 className="text-2xl font-bold">UFCG Finder</h1>
       <p>Bem vindo ao achados e perdidos da UFCG!</p>
       <p>
         Este é um ambiente destinado a divugação de objetos achados ou perdidos

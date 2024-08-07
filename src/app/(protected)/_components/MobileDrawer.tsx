@@ -32,7 +32,7 @@ async function MobileDrawer() {
       </SheetTrigger>
       <SheetContent side="left">
         <SheetHeader>
-          <SheetTitle>Achados e Perdidos</SheetTitle>
+          <SheetTitle>UFCG Finder</SheetTitle>
 
           <SheetDescription>
             <SheetClose asChild>
