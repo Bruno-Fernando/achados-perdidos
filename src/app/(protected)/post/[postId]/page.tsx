@@ -64,7 +64,8 @@ async function Post({ params }: { params: { postId: string } }) {
           <ClaimObject
             found={data?.type === "FOUND"}
             title={data?.title}
-            author={data?.author.name}
+            author={data?.author.name ?? ""}
+            authorEmail={data?.author.email ?? ""}
           />
         </div>
       </div>
