@@ -1,4 +1,4 @@
-interface EmailTemplate {
+interface CLaimTemplate {
   userName: string;
   postTitle: string;
   found: boolean;
@@ -14,7 +14,7 @@ export const claimTemplate = ({
   senderName,
   senderEmail,
   message,
-}: EmailTemplate) => {
+}: CLaimTemplate) => {
   return `
 Olá, ${userName}! O objeto que você postou "${postTitle}" foi ${
     found ? "reivindicado" : "encontrado"
@@ -37,4 +37,29 @@ Caso o objeto seja devolvido, não se esqueça de deletar a postagem.
 <br/><br/>
 UFCG Finder
 `;
+};
+
+// ########################################################################################################
+
+interface UnclaimTemplate {
+  userName: string;
+  postTitle: string;
+  senderName: string;
+  senderEmail: string;
+}
+
+export const unclaimTemplate = ({
+  userName,
+  postTitle,
+  senderName,
+  senderEmail,
+}: UnclaimTemplate) => {
+  return `
+  Olá, ${userName}! O objeto "${postTitle}" teve sua reinvidicação cancelada por ${senderName}.
+  <br/> <br/>
+  Caso precise entrar em contato: ${senderEmail}.
+
+  <br/><br/>
+  UFCG Finder
+  `;
 };

@@ -73,6 +73,7 @@ export async function GET(req: Request) {
       orderBy: { createdAt: "desc" },
       where: {
         deleted: false,
+        claimUser: null,
       },
     });
 

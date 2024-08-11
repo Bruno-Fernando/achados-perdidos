@@ -45,31 +45,34 @@ async function Post({ params }: { params: { postId: string } }) {
 
       <p>{data?.description}</p>
 
-      <Separator className="my-8" />
+      {data && !data.claimUserId && (
+        <>
+          <Separator className="my-8" />
 
-      <div>
-        <p className="text-lg font-bold">
-          {data?.type === "FOUND"
-            ? "Esse objeto é seu?"
-            : "Você encontrou esse objeto?"}
-        </p>
-        <p>
-          Entre em contato através do e-mail:{" "}
-          <a href={`mailto:${data.author.email}`} className="underline">
-            {data.author.email}
-          </a>
-        </p>
-        <div>
-          Ou avise:
-          <ClaimObject
-            found={data?.type === "FOUND"}
-            title={data?.title}
-            author={data?.author.name ?? ""}
-            authorEmail={data?.author.email ?? ""}
-            postId={params.postId}
-          />
-        </div>
-      </div>
+          <div>
+            <p className="text-lg font-bold">
+              {data?.type === "FOUND"
+                ? "Esse objeto é seu?"
+                : "Você encontrou esse objeto?"}
+            </p>
+            <p>
+              Entre em contato através do e-mail:{" "}
+              <a href={`mailto:${data.author.email}`} className="underline">
+                {data.author.email}
+              </a>
+            </p>
+            <div>
+              Ou avise:
+              <ClaimObject
+                found={data?.type === "FOUND"}
+                title={data?.title}
+                author={data?.author.name ?? ""}
+                postId={params.postId}
+              />
+            </div>
+          </div>
+        </>
+      )}
 
       <Separator className="my-8" />
 
