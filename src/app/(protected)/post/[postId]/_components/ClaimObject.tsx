@@ -20,9 +20,10 @@ interface Props {
   found: boolean;
   author: string;
   authorEmail: string;
+  postId: string;
 }
 
-function ClaimObject({ title, found, author, authorEmail }: Props) {
+function ClaimObject({ title, found, author, authorEmail, postId }: Props) {
   const { toast } = useToast();
 
   const [open, setOpen] = useState(false);
@@ -45,7 +46,7 @@ function ClaimObject({ title, found, author, authorEmail }: Props) {
       authorEmail,
       found,
       authorName: author,
-      postTitle: title,
+      postId,
     });
   };
 

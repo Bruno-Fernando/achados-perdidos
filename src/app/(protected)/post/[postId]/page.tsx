@@ -66,6 +66,7 @@ async function Post({ params }: { params: { postId: string } }) {
             title={data?.title}
             author={data?.author.name ?? ""}
             authorEmail={data?.author.email ?? ""}
+            postId={params.postId}
           />
         </div>
       </div>

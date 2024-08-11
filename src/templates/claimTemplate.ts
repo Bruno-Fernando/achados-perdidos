@@ -22,11 +22,11 @@ Olá, ${userName}! O objeto que você postou "${postTitle}" foi ${
 ${senderName}. <br/>
 ${
   message
-    ? `Ele deixou a seguinte mensagem: <br/>
+    ? `Ele deixou a seguinte mensagem: <br/> <br/>
 ${message}`
     : ""
 }
-<br/>
+<br/> <br/>
 O e-mail de contato dele é: ${senderEmail}.
 <br/>
 Importante: objetos ${
