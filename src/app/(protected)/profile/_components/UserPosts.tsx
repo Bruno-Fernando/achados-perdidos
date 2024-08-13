@@ -18,8 +18,8 @@ function UserPosts({ userId }: Props) {
   return (
     <Tabs defaultValue="posts" className="">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="posts">Postagens em aberto</TabsTrigger>
-        <TabsTrigger value="claimed">Postagens reivindicadas</TabsTrigger>
+        <TabsTrigger value="posts">Postagens em Aberto</TabsTrigger>
+        <TabsTrigger value="claimed">Postagens Reivindicadas</TabsTrigger>
       </TabsList>
       <TabsContent value="posts">
         <div className="mt-4 flex flex-col gap-4">

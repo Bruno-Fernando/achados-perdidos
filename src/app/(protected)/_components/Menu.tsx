@@ -31,12 +31,7 @@ async function Menu() {
           {session?.user.name}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/profile">
-            <UserCircle2 className="mr-2 h-4 w-4" />
-            Perfil
-          </Link>
-        </DropdownMenuItem>
+
         <DropdownMenuItem>
           <ToggleDarkMode />
         </DropdownMenuItem>

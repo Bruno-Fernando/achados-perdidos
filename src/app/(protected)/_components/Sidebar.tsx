@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import SearchForm from "./SearchForm";
+import { Icons } from "@/components/ExternalIcons";
 
 function Sidebar() {
   return (
@@ -13,7 +14,14 @@ function Sidebar() {
           <Button asChild variant="default" className="mt-8 rounded-full">
             <Link href="/new-post">
               <PlusCircle className="mr-2 h-4 w-4" />
-              Nova postagem
+              Nova Postagem
+            </Link>
+          </Button>
+
+          <Button asChild variant="secondary" className="mt-2 rounded-full">
+            <Link href="/profile">
+              <Icons.fileSliders className="mr-2 h-4 w-4" />
+              Gerenciar Postagens
             </Link>
           </Button>
         </div>

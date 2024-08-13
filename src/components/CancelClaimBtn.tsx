@@ -62,7 +62,7 @@ function CancelClaimBtn({ id, userName, showClaimUser }: Props) {
       <AlertDialogTrigger asChild>
         <Button variant="secondary">
           <Ban className="mr-2 h-4 w-4" />
-          Cancelar reivindicação
+          Cancelar Reivindicação
         </Button>
       </AlertDialogTrigger>
 
