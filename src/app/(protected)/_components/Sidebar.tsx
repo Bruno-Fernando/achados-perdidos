@@ -19,7 +19,7 @@ function Sidebar() {
           </Button>
 
           <Button asChild variant="secondary" className="mt-2 rounded-full">
-            <Link href="/profile">
+            <Link href="/manage-posts">
               <Icons.fileSliders className="mr-2 h-4 w-4" />
               Gerenciar Postagens
             </Link>

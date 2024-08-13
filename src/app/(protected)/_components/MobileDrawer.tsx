@@ -37,7 +37,7 @@ async function MobileDrawer() {
 
           <SheetDescription>
             <SheetClose asChild>
-              <Link href="/profile">
+              <Link href="/manage-posts">
                 <Avatar className="mx-auto mb-2">
                   <AvatarImage src={session?.user.image || ""} />
                   <AvatarFallback>{avatarFallback}</AvatarFallback>
@@ -61,7 +61,7 @@ async function MobileDrawer() {
               variant="secondary"
               className="mt-8 w-full rounded-full"
             >
-              <Link href="/profile">
+              <Link href="/manage-posts">
                 <Icons.fileSliders className="mr-2 h-4 w-4" />
                 Gerenciar Postagens
               </Link>
