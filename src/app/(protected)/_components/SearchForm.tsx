@@ -54,7 +54,7 @@ function SearchForm() {
           control={form.control}
           name="search"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-11/12">
               <FormControl>
                 <div className="relative">
                   <Input

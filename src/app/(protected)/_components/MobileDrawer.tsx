@@ -17,6 +17,7 @@ import LogoutBtn from "./LogoutBtn";
 import ToggleDarkMode from "./ToggleDarkMode";
 import Link from "next/link";
 import SearchForm from "./SearchForm";
+import { Icons } from "@/components/ExternalIcons";
 
 async function MobileDrawer() {
   const session = await getAuthSession();
@@ -32,11 +33,11 @@ async function MobileDrawer() {
       </SheetTrigger>
       <SheetContent side="left">
         <SheetHeader>
-          <SheetTitle>Achados e Perdidos</SheetTitle>
+          <SheetTitle>UFCG Finder</SheetTitle>
 
           <SheetDescription>
             <SheetClose asChild>
-              <Link href="/profile">
+              <Link href="/manage-posts">
                 <Avatar className="mx-auto mb-2">
                   <AvatarImage src={session?.user.image || ""} />
                   <AvatarFallback>{avatarFallback}</AvatarFallback>
@@ -55,10 +56,27 @@ async function MobileDrawer() {
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button asChild variant="default" className="mt-8 rounded-full">
+            <Button
+              asChild
+              variant="secondary"
+              className="mt-8 w-full rounded-full"
+            >
+              <Link href="/manage-posts">
+                <Icons.fileSliders className="mr-2 h-4 w-4" />
+                Gerenciar Postagens
+              </Link>
+            </Button>
+          </SheetClose>
+
+          <SheetClose asChild>
+            <Button
+              asChild
+              variant="default"
+              className="mt-8 w-full rounded-full"
+            >
               <Link href="new-post">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Nova postagem
+                Nova Postagem
               </Link>
             </Button>
           </SheetClose>

@@ -121,7 +121,6 @@ function FilterPostForm({ closeDialog }: Props) {
                     disabled={(date) =>
                       date > new Date() || date < new Date("2023-01-01")
                     }
-                    initialFocus
                   />
                 </PopoverContent>
               </Popover>

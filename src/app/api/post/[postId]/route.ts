@@ -117,7 +117,7 @@ export async function DELETE(
     const { returned, feedback } = DeletePostValidator.parse(body);
 
     const post = await db.post.findUnique({
-      where: { id: params.postId, deleted: false },
+      where: { id: params.postId, deleted: false, authorId: session.user.id },
     });
     if (post?.imgKey) {
       await utapi.deleteFiles(post.imgKey);

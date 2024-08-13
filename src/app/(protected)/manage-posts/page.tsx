@@ -7,9 +7,12 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import UserPosts from "./_components/UserPosts";
+import { getAuthSession } from "@/lib/auth";
 
 async function Profile() {
   const queryClient = new QueryClient();
+
+  const session = await getAuthSession();
 
   await queryClient.prefetchQuery({
     queryKey: ["getUserPosts"],
@@ -23,7 +26,7 @@ async function Profile() {
       <Separator className="my-4" />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <UserPosts />
+        <UserPosts userId={session?.user.id || ""} />
       </HydrationBoundary>
     </>
   );

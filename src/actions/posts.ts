@@ -33,6 +33,7 @@ export const getPosts = async ({
     db.post.count({
       where: {
         deleted: false,
+        claimUser: null,
         OR: [
           { title: { contains: search ?? "" } },
           { description: { contains: search ?? "" } },
@@ -58,6 +59,7 @@ export const getPosts = async ({
       take: PER_PAGE,
       where: {
         deleted: false,
+        claimUser: null,
         OR: [
           { title: { contains: search ?? "" } },
           { description: { contains: search ?? "" } },
@@ -93,6 +95,11 @@ export const getPostById = async (id: string) => {
     where: {
       id,
       deleted: false,
+      OR: [
+        { claimUserId: null },
+        { claimUserId: session.user.id },
+        { authorId: session.user.id },
+      ],
     },
     include: {
       author: {
@@ -113,14 +120,39 @@ export const getUserPosts = async () => {
     throw new Error("Unauthorized");
   }
 
-  const userPosts = await db.post.findMany({
-    where: {
-      authorId: session.user.id,
-      deleted: false,
-    },
-  });
+  const [userPosts, claimedPosts] = await db.$transaction([
+    db.post.findMany({
+      where: {
+        deleted: false,
+        authorId: session.user.id,
+        claimUserId: null,
+      },
+    }),
+    db.post.findMany({
+      where: {
+        deleted: false,
+        OR: [
+          { claimUserId: session.user.id },
+          {
+            authorId: session.user.id,
+            claimUserId: {
+              not: null,
+            },
+          },
+        ],
+      },
+      include: {
+        claimUser: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    }),
+  ]);
 
-  return userPosts;
+  return { userPosts, claimedPosts };
 };
 
 export const getUserPostById = async (id: string) => {
