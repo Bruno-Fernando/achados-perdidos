@@ -1,8 +1,8 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { utapi } from "@/lib/uploadthing";
 import { DeletePostValidator } from "@/lib/validators/deletePost";
 import { PostValidator } from "@/lib/validators/newPost";
-import { utapi } from "@/utils/uploadthing";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 

@@ -61,7 +61,7 @@ function PostCard({
         </div>
 
         <p className="pr-3 text-end">
-          {new Date(createdAt.toString()).toLocaleDateString()}
+          {new Date(createdAt.toString()).toLocaleDateString("pt-br")}
         </p>
         <div className="px-3 pb-3">
           <h3 className="text-lg">
