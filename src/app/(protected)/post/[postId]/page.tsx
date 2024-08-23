@@ -7,8 +7,10 @@ import { Facebook } from "lucide-react";
 import Image from "next/image";
 import CopyToClipboard from "./_components/CopyToClipboard";
 import ClaimObject from "./_components/ClaimObject";
+import { getAuthSession } from "@/lib/auth";
 
 async function Post({ params }: { params: { postId: string } }) {
+  const session = await getAuthSession();
   const data = await getPostById(params.postId);
 
   return (
@@ -45,34 +47,36 @@ async function Post({ params }: { params: { postId: string } }) {
 
       <p>{data?.description}</p>
 
-      {data && !data.claimUserId && (
-        <>
-          <Separator className="my-8" />
+      {data &&
+        !data.claimUserId &&
+        data.author.email !== session?.user.email && (
+          <>
+            <Separator className="my-8" />
 
-          <div>
-            <p className="text-lg font-bold">
-              {data?.type === "FOUND"
-                ? "Esse objeto é seu?"
-                : "Você encontrou esse objeto?"}
-            </p>
-            <p>
-              Entre em contato através do e-mail:{" "}
-              <a href={`mailto:${data.author.email}`} className="underline">
-                {data.author.email}
-              </a>
-            </p>
             <div>
-              Ou avise:
-              <ClaimObject
-                found={data?.type === "FOUND"}
-                title={data?.title}
-                author={data?.author.name ?? ""}
-                postId={params.postId}
-              />
+              <p className="text-lg font-bold">
+                {data?.type === "FOUND"
+                  ? "Esse objeto é seu?"
+                  : "Você encontrou esse objeto?"}
+              </p>
+              <p>
+                Entre em contato através do e-mail:{" "}
+                <a href={`mailto:${data.author.email}`} className="underline">
+                  {data.author.email}
+                </a>
+              </p>
+              <div>
+                Ou avise:
+                <ClaimObject
+                  found={data?.type === "FOUND"}
+                  title={data?.title}
+                  author={data?.author.name ?? ""}
+                  postId={params.postId}
+                />
+              </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
 
       <Separator className="my-8" />
 
