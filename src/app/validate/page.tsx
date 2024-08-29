@@ -23,15 +23,14 @@ import {
 } from "@/components/ui/Form";
 import ExtFormContainer from "@/components/ExtFormContainer";
 import InfoDialog from "./_components/InfoDialog";
-import { useUpdateValidatedUser, useValidate } from "@/services/useValidate";
+import { useUpdateValidatedUser } from "@/services/useValidate";
 import { Label } from "@/components/ui/Label";
+import pdfToText from "react-pdftotext";
 
 function Validate() {
   const { toast } = useToast();
   const { update } = useSession();
   const router = useRouter();
-
-  const [loading, setIsloading] = useState(false);
 
   const form = useForm<ValidateRegistrationCodePayload>({
     resolver: zodResolver(UfcgRegistrationCodeValidator),
@@ -48,27 +47,9 @@ function Validate() {
       variant: "destructive",
     });
     form.reset();
-    setIsloading(false);
   };
 
-  const { mutate: validateUser } = useValidate({
-    onSuccess: (data) => {
-      if (data.isAuth) {
-        updateUser();
-      } else {
-        toast({
-          title: "Erro",
-          description: "Não foi possível verificar o seu número de matrícula",
-          variant: "destructive",
-        });
-        form.reset();
-        setIsloading(false);
-      }
-    },
-    onError: handleError,
-  });
-
-  const { mutate: updateUser } = useUpdateValidatedUser({
+  const { mutate: updateUser, isPending: loading } = useUpdateValidatedUser({
     onSuccess: async () => {
       await update();
       router.replace("/home");
@@ -77,11 +58,29 @@ function Validate() {
   });
 
   const onSubmit = async (values: ValidateRegistrationCodePayload) => {
-    const formData = new FormData();
-    formData.append("rdmfile", values.rdmfile[0]);
-    formData.append("registrationCode", values.registrationCode);
+    pdfToText(values.rdmfile[0])
+      .then((text) => {
+        const match = text.includes(values.registrationCode);
 
-    validateUser(formData);
+        if (match) {
+          updateUser();
+        } else {
+          toast({
+            title: "Erro",
+            description: "Não foi possível verificar o seu número de matrícula",
+            variant: "destructive",
+          });
+          form.reset();
+        }
+      })
+      .catch(() => {
+        toast({
+          title: "Erro",
+          description: "Não foi possível análisar o arquivo pdf do RDM",
+          variant: "destructive",
+        });
+        form.reset();
+      });
   };
 
   return (
